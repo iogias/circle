@@ -1,0 +1,110 @@
+{% extends 'base.html' %} 
+{% block title %} Beranda {% endblock %} 
+{% block content %}
+<div class="swiper-container mySwiper slide-content">
+  <div class="swiper-wrapper">
+    {% for hero in ongoing_hero %}
+    <div class="swiper-slide">
+      <a href="{{hero.get_absolute_url}}">
+        <div class="banner-img-wrapper">
+          <img
+            class="banner-img"
+            src="{{hero.banner_img.url}}"
+            alt="{{hero.title}}"
+          />
+        </div>
+      </a>
+    </div>
+    {% empty %}
+    <div><p class="text-white">Belum ada promo</p></div>
+    {% endfor %}
+  </div>
+</div>
+
+{% for cat in categories %}
+<div class="area-content mt-5">
+    <div class="widget-title">
+        <div class="widget-head-text">Popular {{cat.name}}</div>
+        <div class="main-line"></div>
+        <a href="{{cat.get_absolute_url}}" class="main-link">
+            <div class="widget-head-button">
+                <div class="textBtn">Lihat semua</div>
+                <i class="fa fa-chevron-right"></i>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="swiper-container productSwiper mb-2">
+  <div class="swiper-wrapper">
+    {% for p in pop_products %}
+    {% if p.category_id == cat.id %}
+    <div class="swiper-slide">
+      <a href="{{p.get_absolute_url}}">
+        <div>
+          <img
+            height="80"
+            width="80"
+            class="rounded shadow"
+            src="{{p.logo_image.url}}"
+            alt="{{p.name}}"
+          />
+        </div>
+      </a>
+    </div>
+    {% endif %}
+    {% empty %}
+    <div><p class="text-white">Belum ada produk</p></div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+
+<div class="area-content mt-5">
+    <div class="widget-title">
+        <div class="widget-head-text">Berita Terkini</div>
+        <div class="main-line"></div>
+        <a href="https://berita.yodu.id" class="main-link" target="_blank">
+            <div class="widget-head-button">
+                <div class="textBtn">Lihat semua</div>
+                <i class="fa fa-chevron-right"></i>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="swiper-container mySwiper slide-content-tall">
+<div class="swiper-wrapper">
+  {% for news in latest_news %}
+    <div class="swiper-slide">
+        <a href="{{ news.link }}">
+              <div class="card-full">
+                <img src="{{ news.jetpack_featured_media_url }}"
+                    width="768"
+                    height="499"
+                    alt="{{ news.slug }}"
+                    class="cf-image">
+                {% for news_cat in list_cat %}
+                  {% if news_cat.id == news.categories.0 %}
+                  <span class="cat-badges badge 
+                  {% if news_cat.id == 8 %} bg-warning
+                  {% elif news_cat.id == 3 %}bg-info
+                  {% elif news_cat.id == 7 %}bg-danger
+                  {% else %} bg-dark{% endif %}">
+                    {{news_cat.name}}
+                  </span>
+                  {% endif %}
+                {% endfor %}
+
+                <div class="card-full-desc">
+                    <p class="cfd-text">
+                        {{ news.title.rendered }}
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+  {% empty %}
+    <div><p class="text-white">Belum ada berita</p></div>
+  {% endfor %}
+</div>
+</div>
+{% endblock %}

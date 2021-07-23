@@ -1,0 +1,93 @@
+{% load static %}
+<!-- begin of footer -->
+<footer class="section-footer">
+  <div class="container yd-instant-row mt-5">
+    <div class="yd-contact">
+      <div class="yd-post-icon d-flex">
+        <img src="{% static 'img/logo-md.png' %}" width="55" height="55"
+        class="main-logo" />
+        <a
+          href="https://play.google.com/store/apps/details?id=com.yodu.user"
+          target="_blank"
+        >
+          <img src="{% static 'img/gplay-sm.png' %}" class="main-logo" />
+        </a>
+      </div>
+      <div class="yd-address">
+        <p class="main-attr">
+          SCBD, Gedung Treasury Tower Lt. 29, Kawasan District 8 LOT 28, Jl.
+          Jend. sudirman kav 52-53, RT.5/RW.3, Senayan, Kec. Kebayoran. Baru,
+          Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12190
+        </p>
+        <p class="main-attr vw-desk">Help@yodu.id</p>
+      </div>
+    </div>
+    <div class="line-mail">
+      <span>help@yodu.id</span>
+    </div>
+    <div class="yd-copyright">
+      <div class="yd-nav-foot">
+        <div class="ol-group">
+          <h5>YODU CIRLCE</h5>
+          <a href="{% url 'syarat_ketentuan' %}">Syarat & Ketentuan</a>
+          <a href="{% url 'tentang_kami' %}">Tentang Kami</a>
+          <a href="{% url 'kontak_kami' %}">Kontak Kami</a>
+          <a href="{% url 'faq' %}">F.A.Q</a>
+        </div>
+        <div class="ol-group">
+          <h5>Berita</h5>
+          <a href="">Games</a>
+          <a href="">Technology</a>
+          <a href="">Entertainment</a>
+          <a href="">E-sports</a>
+        </div>
+        <div class="ol-group">
+          <h5>Toko</h5>
+          {% for c in menu_categories %}
+          <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+          {% endfor %}
+        </div>
+        <div class="ol-group">
+          <h5>Turnamen</h5>
+          <a href="#">List Turnamen</a>
+        </div>
+      </div>
+    </div>
+    <div class="yd-text-foot">
+      <div class="yd-socialmedia-foot">
+        <ul class="sc-group">
+          <li>
+            <a href="https://www.facebook.com/yoduemoneyID" target="_blank">
+              <i class="fa fa-facebook-f"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/yodu_emoney/" target="_blank">
+              <i class="fa fa-instagram"></i>
+            </a>
+          </li>
+          {% comment %} <li>
+            <a href="">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a href="">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </li> {% endcomment %}
+          <li>
+            <a href="https://api.whatsapp.com/send?phone=6281517070677&text=Halo%20YODU!" target="_blank">
+              <i class="fa fa-whatsapp"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <p>
+        <span>
+        &copy; 2021 - {% now "Y" %}
+        YODU Circle</span> | PT.Akasanet Bumi Nusantara. All Rights Reserved
+      </p>
+    </div>
+  </div>
+</footer>

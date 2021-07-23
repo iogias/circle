@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% load static %} 
+{% block title %}
+{{promo.title}} 
+{% endblock %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="section-content">
+<div class="container">
+<div class="area-content">
+    <div class="row">
+        <div class="col-md-8 col-lg-8 nk-blog-post bg-light rounded">
+            <div class="nk-post-img">
+                <img class="rounded" height="300" src="{{promo.banner_img.url}}" alt="{{promo.title}}">
+            </div>
+            <div class="nk-post-text mt-1">
+                <h1 class="nk-post-title h3">{{promo.title}}</h1>
+                    <div class="nk-post-by">
+                         Periode : {{ promo.started|date:'d M Y'}} - {{ promo.ended|date:'d M Y'}} 
+                    </div>
+                <div class="yd-gap"></div>
+                <div class="p-1">
+                  <article>{{promo.content}}</article>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,7 @@
+Django==3.2.5
+django-widget-tweaks==1.4.8
+factory-boy==3.2.0
+pytest-django==4.4.0
+pytest-factoryboy==2.1.0
+httpx==0.18.2
+xmltodict==0.12.0

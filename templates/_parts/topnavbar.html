@@ -1,0 +1,72 @@
+{% load static %}
+<nav
+  class="navbar navbar-expand-lg fixed-top navbar-dark"
+  aria-label="Main navigation"
+>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img
+        height="50"
+        width="36"
+        src="{% static 'icons/icon-md.png' %}"
+        alt="Circle Logo"
+      />
+    </a>
+
+    <button
+      class="navbar-toggler p-0 border-0"
+      type="button"
+      id="navbarSideCollapse"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsDefault">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
+        {% url 'home' as url %}
+        <li class="nav-item">
+          <a
+            class="nav-link {% if request.path == url %}active{% endif %}"
+            href="{{ url }}"
+            >Beranda</a
+          >
+        </li>
+        {% url 'store:product_list' as url %}
+        <li class="nav-item">
+          <a
+            class="nav-link {% if request.path == url %}active{% endif %}"
+            href="{{ url }}"
+            >Toko</a
+          >
+        </li>
+        {% url 'promo:promo_list' as url %}
+        <li class="nav-item">
+          <a
+            class="nav-link {% if request.path == url %}active{% endif %}"
+            href="{{ url }}"
+            >Promo</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://berita.yodu.id" target="_blank">Berita</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Turnamen</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Login | Register</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Cari diamonds"
+          aria-label="Cari"
+        />
+        <button class="btn btn-outline-warning" type="submit">Cari</button>
+      </form>
+    </div>
+  </div>
+</nav>

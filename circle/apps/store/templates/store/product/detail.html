@@ -1,0 +1,174 @@
+{% extends "base.html" %} {% load static %} 
+{% block title %}
+{{product.name}} 
+{% endblock %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="text-white">
+<div class="row align-items-stretch g-2">
+  <div class="col-md-5 col-lg-5 order-1 px-4 py-1">
+    <h4 class="text-uppercase">{{product.name}}</h4>
+    <p>{{product.category}}</p>
+    <img width="100" height="100" class="shadow rounded-2 mb-4"
+    alt={{product.name}} 
+    src="{% if product.logo_image %}{{product.logo_image.url}}{% else %}{% static 'img/yodu.jpg' %}
+    {% endif %}" />
+    <div class="accordion text-dark mb-3" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Deskripsi Produk
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <p>{{product.description}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            Cara pembelian
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+          <div style="font-size: 0.8rem" class="tex-black">
+          <p class="fw-600">Berikut cara Pembelian {{product.category}} :</p>
+          <ol>
+            <li class="{% if product.category.code == 'voucher' %}d-none{% endif %}">
+              Masukan informasi user <strong>{{product.name}}</strong> kamu
+            </li>
+            <li>Pilih item apa yang akan kamu beli</li>
+            <li>Pilih metode pembayaran yang ingin kamu gunakan</li>
+            <li>
+              Ikuti langkah pembayaran sesuai dengan metode pembayaran yang kamu
+              pilih
+            </li>
+            {% if product.category.code == 'topup' %}
+            <li>
+              Jika sukses, saldo akan terpotong dan item akan ditambahkan ke akun
+              kamu
+            </li>
+            {% elif product.category.code == 'voucher' %}
+            <li>
+              Jika sukses, saldo akan terpotong dan Kode Voucher akan ditampilkan di halaman ini
+            </li>
+            {% else %}
+            <li></li>
+            {% endif %}
+            <li>Simpan/Copy bukti pembayaran kamu</li>
+          </ol>
+        </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7 col-lg-7 order-2 px-4">
+    <div class="{% if product.category.code == 'voucher' %}d-none{% endif %} mb-4">
+      <div class="widget-title">
+      <h4 class="widget-head-text text-white">
+      INFORMASI USER
+      </h4>
+      <div class="main-line"></div>
+      </div>
+      <form>
+      {% csrf_token %}
+
+      {% for field in forms %}
+      <div class="form-group row">
+        <div class="col-md-6 col py-2">
+          <label for="{{field.id_for_label}}">{{field.label}}</label>
+            {{field|add_class:"form-control"}}
+            {% for error in field.errors %}
+              <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+      </form>
+    </div>
+    <div class="widget-title">
+    <h4 class="widget-head-text text-white">
+    PILIH ITEM
+    </h4>
+    <div class="main-line"></div>
+    </div>
+    <div class="row justify-content-start">
+      {% for item in items %}
+      <div class="col col-lg-3">
+        <div class="item-list">
+          <input
+            name="items"
+            type="radio"
+            value="{{item.id}}"
+            id="{{item.id}}"
+            class="cls-items"
+            data-category_code="{{product.category.code}}"
+            data-partner_id="{{product.partner_id}}"
+            data-product_id="{{item.product_id}}"
+            data-product_code="{{product.product_code}}"
+            data-item_code="{{item.item_code}}"
+          />
+          <label for="{{item.id}}">{{item.name}}</label>
+          {% comment %} <span>Rp{{#item.sell_price|floatformat:"g"#}}</span> {% endcomment %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+$(document).ready(function () {
+
+  $('.cls-items').on('click',function(e){
+    e.preventDefault();
+    const id = $(this).attr('id');
+    const category_code = $(this).data('category_code');
+    const partner_id = $(this).data('partner_id');
+    const product_id = $(this).data('product_id');
+    const product_code = $(this).data('product_code');
+    const item_code = $(this).data('item_code');
+
+    let data = {id,category_code,partner_id,product_id,product_code,item_code};
+    
+    if(category_code=='topup'){
+      url = 'url_topup';
+      data = {...data,url}
+      
+    } else {
+      url = 'url_voucher';
+      data = {...data,url}
+    }
+
+    const inquiry = inquiryItem(data)
+    
+  }); // END Click Items
+
+  function inquiryItem(args){
+    $.ajax({
+      dataType:"json",
+      method:"POST",
+      url:"{% url 'cart:inquiry_item' %}",
+      headers: {'X-CSRFToken': '{{ csrf_token }}'},
+      data:args
+    }).done(function(res){
+      if(res.message=="True"){
+        console.log(res.data)
+      }
+    });
+  }
+
+}); // END DOCUMENT READY
+</script>
+{% endblock %}

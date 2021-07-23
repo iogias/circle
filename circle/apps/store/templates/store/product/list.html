@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% load static %} 
+{% block title %} 
+    {% if category %}{{ category.name }} 
+    {% else %} Produk
+    {% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="widget-title">
+        <div class="widget-head-text">
+         {% if category %}{{ category.name }} 
+         {% else %} Semua Produk
+         {% endif %}
+        </div>
+        <div class="main-line"></div>
+    </div>
+   <div class="row row-cols-2 row-cols-lg-4 align-items-stretch g-2 py-4">
+   {% for product in products %}
+      <div class="col">
+         <a href="{{ product.get_absolute_url }}">
+         <img 
+         width="80" height="80" class="shadow rounded-2 mx-auto d-block"
+         alt={{ product.name }}
+         src="{% if product.logo_image %}{{ product.logo_image.url }}{% else %}{% static 'img/yodu.jpg' %}{% endif %}"> 
+         </a>
+         <p class="product-name d-flex justify-content-center">{{ product.name }}</p>
+      </div>
+   {% endfor %}
+   </div>
+
+<div class="yd-gap-2"></div>
+<div class="container">
+<div class="widget-title">
+    <h4 class="widget-head-text text-center">Kenapa Harus Kami?</h4>
+</div>
+<div class="row">
+    <div class="col-md-6 col-lg-6 mt-1">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <h4 class="text-second">Transaksi Mudah</h4>
+                    <div class="yd-gap-1"></div>
+                    <p>Bertransaksi menggunakan YODU itu semudah membalikan telapak tangan. Yang kamu perlukan hanyalah aplikasi YODU dan sejuta keinginan untuk menjadi lebih jago dari orang lain.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 mt-1">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <h4 class="text-second">Transaksi Murah</h4>
+                    <div class="yd-gap-1"></div>
+                    <p>Ingin ganteng tapi gak bikin tekor? Bisa kok, asal kamu pakai YODU. YODU selalu memberikan harga terbaik ketimbang yang lain. Nggak percaya? Coba belanja dulu.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-2"></div>
+<div class="row">
+    <div class="col-md-6 col-lg-6 mt-1">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <h4 class="text-second">Transaksi Aman</h4>
+                    <div class="yd-gap-1"></div>
+                    <p> YODU merupakan satu-satunya yang punya E-money sendiri. Itu artinya semua transaksi yang kamu lakukan di YODU E-money itu dijamin dan dilindungi oleh BI. Mana ada yang lebih aman dari YODU?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 mt-1">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <h4 class="text-second">Customer Support</h4>
+                    <div class="yd-gap-1"></div>
+                    <p> Voucher nyangkut? Diamonds gak masuk? Tenang, jangan takut. Kamu bisa hubungi layanan Customer Support YODU yang aktif pada Hari Kerja.
+                    Senin-Jum'at 09.00-17.00 WIB. Semua masalah kami layani.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock  %}

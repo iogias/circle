@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% load static %} 
+{% block title %} 
+Promo List
+{% endblock %}
+
+{% block content %}
+<div class="widget-title">
+    <div class="widget-head-text">
+        Banyak promo disini
+    </div>
+    <div class="main-line"></div>
+</div>
+<div class="row g-2 py-4">
+   {% for promo in promo_list %}
+    <div class="col col-lg-4">
+      <div class="rounded bg-light">
+        <div class="nk-blog-post">
+            <img
+            height="100"
+            class="nk-post-img rounded-2"
+            alt="{{ promo.title }}"
+            src="{{ promo.banner_img.url }}"> 
+            <a href="{{ promo.get_absolute_url }}"></a>
+            <h5 class="nk-post-title">{{ promo.title }}</h5>
+            <p class="nk-post-by">
+            <small class="text-muted">
+            Periode : {{ promo.started|date:'d M Y'}} - {{ promo.ended|date:'d M Y'}}
+            </small>
+            </p>
+            <p class="post-content">{{ promo.content|truncatewords_html:10 }}</p>
+            <a href="{{ promo.get_absolute_url }}" class="btn btn-primary">Selengkapnya</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="text-center"><p class="text-white">Belum ada promo</p></div>
+   {% endfor %}
+</div>
+{% endblock %}

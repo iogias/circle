@@ -1,0 +1,8 @@
+<nav class="nav nav-underline" aria-label="Secondary navigation">
+   <a class="nav-link {% if not category %}active{% endif %}" aria-current="page" href="{% url 'store:product_list' %}">
+   Semua Produk
+   </a>
+   {% for c in menu_categories %}
+   <a class="nav-link {% if category.slug == c.slug %}active{% endif %}" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+   {% endfor %}
+</nav>
