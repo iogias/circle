@@ -1,7 +1,7 @@
 import pytest
 from pytest_factoryboy import register
 
-from tests.factories import PromoFactory
+from .tests.factories import PromoFactory
 
 register(PromoFactory)
 
