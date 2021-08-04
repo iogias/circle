@@ -1,14 +1,16 @@
-from circle.apps.core.models import CoreBaseModel
-from circle.apps.partner.models import Partner
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from tinymce.models import HTMLField
+
+from circle.apps.core.models import CoreBaseModel
+from circle.apps.partner.models import Partner
 
 
 class Store(CoreBaseModel):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.CharField(max_length=80, blank=True)
-    logo_image = models.ImageField(upload_to='store/%Y/%m/%d', blank=True)
+    logo_image = models.ImageField(upload_to='store/', blank=True)
 
 
 class Category(CoreBaseModel):
@@ -31,11 +33,9 @@ class Product(CoreBaseModel):
     ]
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
-    partner = models.ForeignKey(Partner, on_delete=models.CASCADE)
     product_code = models.CharField(max_length=80, default='no_code')
-    logo_image = models.ImageField(upload_to='products/logo', blank=True)
-    cover_image = models.ImageField(upload_to='products/cover', blank=True)
-    description = models.TextField(blank=True)
+    logo_image = models.ImageField(upload_to='product/', blank=True)
+    description = HTMLField()
     is_digital = models.BooleanField(default=True)
     attribute = models.CharField(max_length=3, choices=PRODUCT_ATTRIBUTE, default='reg')
 
@@ -53,6 +53,7 @@ class Item(CoreBaseModel):
         ('new', 'New'),
         ('pop', 'Popular')
     ]
+    partner = models.ForeignKey(Partner, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='items', on_delete=models.CASCADE)
     item_code = models.CharField(max_length=120, unique=True)
     buy_price = models.FloatField(default=0, blank=False)

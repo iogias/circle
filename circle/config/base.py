@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'tinymce',
     'circle.apps.core',
     'circle.apps.partner',
     'circle.apps.store',
@@ -22,6 +23,7 @@ INSTALLED_APPS = [
     'circle.apps.order',
     'circle.apps.payment',
     'circle.apps.member',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -92,19 +94,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
 
+TINYMCE_DEFAULT_CONFIG = {
+    "height": "320px",
+    "width": "800px",
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code "
+    "fullscreen insertdatetime media table paste code help wordcount spellchecker",
+    "toolbar": "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft "
+    "aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+    "backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | "
+    "fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | "
+    "a11ycheck ltr rtl | showcomments addcomment code",
+    "custom_undo_redo_levels": 10
+}
 
 # ========= Third Party Config =========== #
 
 
 # === WORD PRESS === #
 WP_ENDPOINT = 'http://berita.yodu.id/wp-json/wp/v2/'
-
-
-# === YODU PAYMENT === #
-YODU_MID = '13143211000701'
-YODU_API_KEY = '13143211000701'
-YODU_MERCHANT_NAME = 'Yodu Circle'
-YODU_MERCHANT_PREFIX = '7180'
-YODU_USERNAME_API = 'api-username'
-YODU_PASSWORD_API = '@p1-password'
-YODU_PUSH_PAY_EP = 'https://push-pay-api.yodu.id/v1/api/'

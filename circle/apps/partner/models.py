@@ -6,8 +6,9 @@ from datetime import datetime
 
 import httpx
 import xmltodict
-from circle.apps.core.models import CoreBaseModel
 from django.db import models
+
+from circle.apps.core.models import CoreBaseModel
 
 NOW = datetime.now()
 TIME_STAMP = str(round(NOW.timestamp()))

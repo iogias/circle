@@ -1,5 +1,6 @@
-from circle.apps.partner.models import Partner
 from django.contrib import admin
+
+from circle.apps.partner.models import Partner
 
 
 @admin.register(Partner)

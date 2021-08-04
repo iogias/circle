@@ -1,12 +1,14 @@
-from circle.apps.core.views import (faq, home, kontak_kami, syarat_ketentuan,
-                                    tentang_kami)
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from circle.apps.core.views import (faq, home, kontak_kami, syarat_ketentuan,
+                                    tentang_kami)
+
 urlpatterns = [
-    path('godmode/', admin.site.urls),
+    path('reign/', admin.site.urls),
+    path('tinymce/', include('tinymce.urls')),
     path('', home, name='home'),
     path('tentang-kami/', tentang_kami, name='tentang_kami'),
     path('faq/', faq, name='faq'),

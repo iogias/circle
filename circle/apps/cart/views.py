@@ -1,6 +1,7 @@
-from circle.apps.partner.models import Partner
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+
+from circle.apps.partner.models import Partner
 
 
 def inquiry_item(request):

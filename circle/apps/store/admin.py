@@ -1,5 +1,6 @@
-from circle.apps.store.models import Category, Item, Product, Store
 from django.contrib import admin
+
+from circle.apps.store.models import Category, Item, Product, Store
 
 
 @admin.register(Store)
@@ -22,16 +23,16 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name__startswith', )
-    list_display = ('name', 'product_code', 'partner', 'category', 'attribute', 'is_active')
-    list_filter = ('partner', 'category', 'attribute', 'is_active')
-    list_editable = ('partner', 'product_code', 'category', 'attribute', 'is_active')
+    list_display = ('name', 'product_code', 'category', 'attribute', 'is_active')
+    list_filter = ('category', 'attribute', 'is_active')
+    list_editable = ('product_code', 'category', 'attribute', 'is_active')
     prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     search_fields = ('name__startswith', )
-    list_display = ('name', 'product', 'item_code', 'buy_price', 'sell_price', 'attribute', 'is_active')
-    list_filter = ('product', 'attribute', 'is_active')
-    list_editable = ('item_code', 'buy_price', 'sell_price', 'attribute', 'is_active')
+    list_display = ('name', 'product', 'partner', 'item_code', 'buy_price', 'sell_price', 'attribute', 'is_active')
+    list_filter = ('partner', 'product', 'attribute', 'is_active')
+    list_editable = ('partner', 'item_code', 'buy_price', 'sell_price', 'attribute', 'is_active')
     prepopulated_fields = {'slug': ('name',)}
