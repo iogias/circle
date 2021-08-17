@@ -21,6 +21,15 @@ class Partner(CoreBaseModel):
     endpoint = models.JSONField(blank=True)
 
     # ========= UPOINT =========== #
+    def upoint_dtu_inquiry(self, *args):
+        if self.code == 'upoint':
+            prefix = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+            item_code = args[0]
+            ref_no = prefix + '_' + item_code
+            return ref_no
+
+    def upoint_dtu_payment(self, *args):
+        pass
 
     def upoint_voucher_request(self, *args):
         if self.code == 'upoint_voucher':
@@ -39,7 +48,7 @@ class Partner(CoreBaseModel):
                 timestamp=TIME_STAMP,
                 signature=signature_inquiry,
             )
-            url = self.endpoint['init']
+            url = self.endpoint['inquiry']
             client = httpx.Client()
             try:
                 r = client.post(url, headers=headers, data=data_request)
@@ -71,7 +80,7 @@ class Partner(CoreBaseModel):
                 timestamp=TIME_STAMP,
                 signature=signature_inquiry,
             )
-            url = self.endpoint['init']
+            url = self.endpoint['payment']
             client = httpx.Client()
             try:
                 r = client.post(url, headers=headers, data=data_request)
@@ -97,7 +106,7 @@ class Partner(CoreBaseModel):
                 "<ayopay><function>Stock Check</function>"\
                 "<id>{}</id><pwd>{}</pwd>"\
                 "<productcode>{}</productcode></ayopay>".format(self.credentials['partner_id'], pwd, product_code)
-            url = self.endpoint['request_xml']
+            url = self.endpoint['req_voucher']
             client = httpx.Client()
             try:
                 r = client.post(url, headers=headers, data=data_request)
@@ -123,7 +132,7 @@ class Partner(CoreBaseModel):
                 "<id>{}</id><trx>{}</trx><pwd>{}</pwd>"\
                 "<productcode>{}</productcode>"\
                 "</ayopay>".format(self.credentials['partner_id'], trx_id, pwd, product_code)
-            url = self.endpoint['request_xml']
+            url = self.endpoint['req_voucher']
             client = httpx.Client()
             try:
                 r = client.post(url, headers=headers, data=data_request)

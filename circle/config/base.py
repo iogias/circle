@@ -5,6 +5,11 @@ CONFIG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'circle.localhost',
+                 'api.circle.localhost',
+                 'admin.circle.localhost'
+                 ]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -13,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_hosts',
     'widget_tweaks',
     'tinymce',
     'circle.apps.core',
@@ -23,10 +29,14 @@ INSTALLED_APPS = [
     'circle.apps.order',
     'circle.apps.payment',
     'circle.apps.member',
-    'django_celery_beat'
+    'circle.apps.news',
+    'circle.apps.api',
+    'django_celery_beat',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -34,6 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware'
 ]
 
 ROOT_URLCONF = 'circle.urls'
@@ -73,6 +84,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# DJANGO REST FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+
+# DJANGO HOSTS
+ROOT_HOSTCONF = 'circle.hosts'  # Change `mysite` to the name of your project
+DEFAULT_HOST = ' '  # Name of the default host
+API_V1_PREFIX = 'api/v1/'
 
 LANGUAGE_CODE = 'en-us'
 

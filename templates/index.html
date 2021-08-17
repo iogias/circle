@@ -1,5 +1,6 @@
 {% extends 'base.html' %} 
-{% block title %} Beranda {% endblock %} 
+{% block title %} Beranda {% endblock %}
+{% load static %}
 {% block content %}
 <div class="swiper-container mySwiper slide-content">
   <div class="swiper-wrapper">
@@ -40,15 +41,15 @@
     {% if p.category_id == cat.id %}
     <div class="swiper-slide">
       <a href="{{p.get_absolute_url}}">
-        <div>
+          <div class="col">
           <img
             height="80"
             width="80"
             class="rounded shadow"
-            src="{{p.logo_image.url}}"
+            src="{% if p.logo_image %} {{p.logo_image.url}} {% else %} {% static 'img/product_placeholder.jpg' %} {% endif %}"
             alt="{{p.name}}"
           />
-        </div>
+          </div>
       </a>
     </div>
     {% endif %}

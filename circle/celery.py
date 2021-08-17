@@ -8,5 +8,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'circle.config.development')
 
 app = Celery('circle')
 
+
 app.config_from_object('django.conf:settings', namespace='CELERY')
+# app.config_from_object(Config, namespace='CELERY')
 app.autodiscover_tasks()

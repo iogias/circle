@@ -23,7 +23,7 @@
          <img 
          width="80" height="80" class="shadow rounded-2 mx-auto d-block"
          alt={{ product.name }}
-         src="{% if product.logo_image %}{{ product.logo_image.url }}{% else %}{% static 'img/yodu.jpg' %}{% endif %}"> 
+         src="{% if product.logo_image %}{{ product.logo_image.url }}{% else %}{% static 'img/product_placeholder.jpg' %}{% endif %}"> 
          </a>
          <p class="product-name d-flex justify-content-center">{{ product.name }}</p>
       </div>
