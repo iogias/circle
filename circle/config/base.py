@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     'django_hosts',
     'widget_tweaks',
     'tinymce',
+    'rest_framework',
+    'rest_framework.authtoken',
     'circle.apps.core',
     'circle.apps.partner',
     'circle.apps.store',
@@ -31,8 +33,7 @@ INSTALLED_APPS = [
     'circle.apps.member',
     'circle.apps.news',
     'circle.apps.api',
-    'django_celery_beat',
-    'rest_framework'
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -87,7 +88,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
 
 # DJANGO HOSTS

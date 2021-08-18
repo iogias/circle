@@ -86,12 +86,13 @@ def save_data_items():
     for p in products_list:
         row = fetch_items_yodu(p[1])
         for r in row:
+            product_obj = get_object_or_404(Product, product_code=r['category'])
+            partner_obj = get_object_or_404(Partner, code=r['supplier'].lower())
+
             try:
                 obj = Item.objects.get(item_code=r['product_id'].strip(), product_id=p[0])
                 break
             except Item.DoesNotExist:
-                product_obj = get_object_or_404(Product, product_code=r['category'])
-                partner_obj = get_object_or_404(Partner, code=r['supplier'].lower())
                 obj = Item(
                     name=r['name'],
                     slug=slugify(r['name']),
