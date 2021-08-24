@@ -5,6 +5,8 @@ CONFIG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 ALLOWED_HOSTS = ['127.0.0.1',
                  'circle.localhost',
                  'api.circle.localhost',
@@ -109,10 +111,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, 'static')
-]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
