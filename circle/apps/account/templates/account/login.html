@@ -1,0 +1,40 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+
+<main class="form-signin">
+<form class="account-form" action="{% url 'account:login' %}" method="post">
+  {% csrf_token %}
+    <h3 class="mb-4 fw-normal text-white text-center">Selamat Datang</h3>
+  {% if form.errors %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    Error : Invalid Credentials !
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+  <div class="form-floating">
+  {{ form.username }}
+  <label for="login-wallet">Wallet Id</label>
+  </div>
+  <div class="form-floating">
+  {{ form.password }}
+  <label for="login-pwd">Password</label>
+  </div>
+  <div class="mt-4">
+    <input type="hidden" name="next" value="{{ next }}">
+    {% comment %} <button class="w-100 btn btn-warning btn-lg yd-btn" type="submit" value="Log-in">Login</button> {% endcomment %}
+    <button class="w-100 btn btn-warning btn-lg yd-btn" type="submit" value="Log-in">Login With YODU</button>
+  </div>
+  <div class="flex-column justify-content-center mx-auto pb-3">
+    <div class="text-center text-white mt-4">
+      Belum punya akun? <a class="text-white" href="{% url 'account:register' %}">Daftar Yuk</a>
+    </div>
+    {% comment %} <div class="text-center"><a href="{% url "account:pwdreset" %}">Forgotten Password?</a></div> {% endcomment %}
+  </div>
+</form>
+</main>
+
+
+{% endblock %}

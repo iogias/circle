@@ -123,7 +123,7 @@ class Partner(CoreBaseModel):
             prefix = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
             product_code = args[0]
             trx_id = prefix + '_' + product_code
-            array_credentials = [trx_id, self.credentials['partner_id'], self.credentials['msg']]
+            array_credentials = [trx_id, self.credentials['partner_id'], self.credentials['secret_token']]
             join_credentials = ''.join(array_credentials)
             pwd = (hashlib.sha1(join_credentials.encode('utf-8')).hexdigest())
             headers = {'Content-Type': 'text/xml'}

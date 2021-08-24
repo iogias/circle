@@ -1,6 +1,7 @@
 {% load static %}
+
 <nav
-  class="navbar navbar-expand-lg fixed-top navbar-dark"
+  class="navbar navbar-expand-md fixed-top navbar-dark pb-1"
   aria-label="Main navigation"
 >
   <div class="container-fluid">
@@ -22,7 +23,16 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="navbar-collapse offcanvas-collapse" id="navbarsDefault">
+    <div class="navbar-collapse offcanvas-collapse px-4" id="navbarsDefault">
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Cari"
+          aria-label="Cari"
+        />
+        <button class="btn btn-outline-warning" type="submit">Cari</button>
+      </form>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
         {% url 'home' as url %}
         <li class="nav-item">
@@ -54,19 +64,27 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Turnamen</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Login | Register</a>
-        </li>
       </ul>
-      <form class="d-flex">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Cari diamonds"
-          aria-label="Cari"
-        />
-        <button class="btn btn-outline-warning" type="submit">Cari</button>
-      </form>
+    
+        {% if user.is_authenticated %}
+        <div class="dropdown pe-3">
+          <button class="btn btn-outline-warning dropdown-toggle" type="button" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+            Profil
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownUser">
+            <li><a class="dropdown-item" href="{% url 'account:dashboard' %}">Dashboard</a></li>
+            <li><a class="dropdown-item" href="{% url 'account:logout' %}">Logout</a></li>
+          </ul>
+        </div>
+        {% else %}
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'account:login' %}">Login | Register</a>
+            </li>
+          </ul>
+        {% endif %}
     </div>
   </div>
+  <div>&nbsp;</div>
 </nav>
+

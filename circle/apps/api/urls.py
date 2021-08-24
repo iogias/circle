@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.urls import path
+from rest_framework.authtoken.views import obtain_auth_token
 
 from circle.apps.api import views
-from rest_framework.authtoken.views import obtain_auth_token
 
 app_name = 'api'
 

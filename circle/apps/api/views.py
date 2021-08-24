@@ -2,18 +2,16 @@ import asyncio
 
 from rest_framework import status
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from circle.apps.news.views import (async_get_latest_news,
                                     async_get_news_categories)
 
-from rest_framework.permissions import IsAuthenticated
-
 
 class AllNewsView(APIView):
-    permission_classes = (IsAuthenticated,)             # <-- And here
-
+    permission_classes = (IsAuthenticated,)
     # def get(self, request):
     #     content = {'data': 'Healthy!'}
     #     return Response(content)

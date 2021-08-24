@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<main class="form-signin">
+<form class="account-form" action="." method="post">
+  {% csrf_token %}
+  <h3 class="mb-4 fw-normal text-white text-center">Register</h3>
+  {% if form.errors %}
+      <p>Errors:</p>
+    {% for field in form %}
+      {% if field.errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ field.label }}: {{ field.errors|striptags }}
+      </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  <div class="form-floating">
+  {{ form.username }}
+  <label for="register-wallet">{{ form.username.label }}</label>
+  </div>
+  <div class="form-floating">
+  {{ form.email }}
+  <label for="register-email">{{ form.email.label}}</label>
+  </div>
+  {% comment %} <div class="form-floating">
+  {{ form.password }}
+  <label for="register-password">{{ form.password.label}}</label>
+  </div>
+  <div class="form-floating">
+  {{ form.password2 }}
+  <label for="register-password2">{{ form.password2.label}}</label>
+  </div> {% endcomment %}
+  <button class="w-100 btn btn-warning btn-lg yd-btn" type="submit" value="Log-in">Request Password</button>
+    <div class="text-center text-white mt-4">
+     Sudah punya akun? <a class="text-white" href="{% url 'account:login' %}">Login</a>
+    </div>
+</form>
+</main>
+{% endblock %}

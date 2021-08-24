@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'circle.apps.cart',
     'circle.apps.order',
     'circle.apps.payment',
-    'circle.apps.member',
+    'circle.apps.account',
     'circle.apps.news',
     'circle.apps.api',
     'django_celery_beat'
@@ -132,6 +132,11 @@ TINYMCE_DEFAULT_CONFIG = {
     "a11ycheck ltr rtl | showcomments addcomment code",
     "custom_undo_redo_levels": 10
 }
+
+
+# AUTH_USER_MODEL = 'account.AccountUser'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
 
 # ========= Third Party Config =========== #
 

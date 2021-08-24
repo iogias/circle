@@ -17,6 +17,7 @@ urlpatterns = [
     path('toko/', include('circle.apps.store.urls', namespace='store')),
     path('promo/', include('circle.apps.promo.urls', namespace='promo')),
     path('cart/', include('circle.apps.cart.urls', namespace='cart')),
+    path('account/', include('circle.apps.account.urls', namespace='account')),
     # path('api/v1/news/', include('circle.apps.news.urls', namespace='news')),
 ]
 if settings.DEBUG:

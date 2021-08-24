@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
+
 import httpx
 from celery import shared_task
 from django.shortcuts import get_list_or_404, get_object_or_404
@@ -44,6 +45,7 @@ def save_data_product(arg):
         if row['status'] == 'ACTIVE':
             try:
                 obj = Product.objects.get(product_code=row['product_id'])
+
             except Product.DoesNotExist:
                 obj = Product(
                     name=row['name'],
@@ -53,7 +55,7 @@ def save_data_product(arg):
                     product_code=row['product_id']
                 )
                 obj.save()
-            return obj
+    return data
 
 
 def fetch_items_yodu(arg):
@@ -103,4 +105,4 @@ def save_data_items():
                     partner_id=partner_obj.id
                 )
                 obj.save()
-            return obj
+    return products_list
