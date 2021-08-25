@@ -6,12 +6,10 @@ from circle.apps.news.views import (async_get_latest_news,
                                     async_get_news_categories)
 from circle.apps.promo.models import Promo
 from circle.apps.store.models import Category, Product
-from circle.apps.store.tasks import save_data_product
+# from circle.apps.store.tasks import save_data_product
 
 
 def home(request):
-    p = save_data_product('voucher')
-    print(">>>>>>>>>>>>", p)
     categories = Category.objects.filter(is_active=True)
     ongoing_hero = Promo.objects.filter(is_active=True, banner_type='hero')
     pop_products = Product.objects.filter(is_active=True, attribute='pop') or Product.objects.filter(
