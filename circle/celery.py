@@ -4,7 +4,7 @@ import os
 
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'circle.config.development')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'circle.config')
 
 app = Celery('circle')
 
