@@ -18,7 +18,7 @@ urlpatterns = [
     path('promo/', include('circle.apps.promo.urls', namespace='promo')),
     path('cart/', include('circle.apps.cart.urls', namespace='cart')),
     path('account/', include('circle.apps.account.urls', namespace='account')),
-    # path('api/v1/news/', include('circle.apps.news.urls', namespace='news')),
+    path('api/v1/', include('circle.apps.api.urls', namespace='api')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

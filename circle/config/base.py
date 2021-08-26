@@ -7,12 +7,6 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = ['127.0.0.1',
-                 'circle.localhost',
-                 'api.circle.localhost',
-                 'admin.circle.localhost'
-                 ]
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -20,11 +14,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_hosts',
     'widget_tweaks',
     'tinymce',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
     'circle.apps.core',
     'circle.apps.partner',
     'circle.apps.store',
@@ -39,15 +33,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_hosts.middleware.HostsResponseMiddleware'
 ]
 
 ROOT_URLCONF = 'circle.urls'
@@ -95,11 +88,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
-
-# DJANGO HOSTS
-ROOT_HOSTCONF = 'circle.hosts'  # Change `mysite` to the name of your project
-DEFAULT_HOST = ' '  # Name of the default host
-API_V1_PREFIX = 'api/v1/'
 
 LANGUAGE_CODE = 'en-us'
 

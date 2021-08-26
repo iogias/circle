@@ -6,6 +6,7 @@ from circle.apps.news.views import (async_get_latest_news,
                                     async_get_news_categories)
 from circle.apps.promo.models import Promo
 from circle.apps.store.models import Category, Product
+
 # from circle.apps.store.tasks import save_data_product
 
 

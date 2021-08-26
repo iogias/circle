@@ -156,7 +156,7 @@ cython_debug/
 
 .vscode
 catatan/
-
+db.json
 circle/config/development.py 
 circle/config/production.py
 circle/config/staging.py
