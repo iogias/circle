@@ -40,7 +40,7 @@ async def async_get_latest_news():
         url = os.path.join(settings.WP_ENDPOINT, 'posts/')
         res = await client.get(url, params=params, timeout=None)
 
-        list_key = ['id', 'date', 'title', 'link',
+        list_key = ['id', 'date', 'title', 'link', 'slug',
                     'categories', 'jetpack_featured_media_url']
         if res.status_code == 200:
             result = res.json()
