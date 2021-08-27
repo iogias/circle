@@ -4,7 +4,7 @@ import httpx
 from django.conf import settings
 
 
-async def async_get_news_by_category(_id, page=6):
+async def async_get_news_by_category(_id, page):
     params = {'categories': _id, 'per_page': page}
     async with httpx.AsyncClient() as client:
         url = os.path.join(settings.WP_ENDPOINT, 'posts')

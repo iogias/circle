@@ -3,7 +3,7 @@ import asyncio
 from django.shortcuts import render
 
 from circle.apps.news.views import (async_get_latest_news,
-                                    async_get_news_categories)
+                                    async_get_news_categories_id)
 from circle.apps.promo.models import Promo
 from circle.apps.store.models import Category, Product
 
@@ -20,7 +20,7 @@ def home(request):
     list_cat = []
     if latest_news:
         for cat in latest_news:
-            category = asyncio.run(async_get_news_categories(cat['id']))
+            category = asyncio.run(async_get_news_categories_id(cat['id']))
             list_cat.append(category)
     context = {'ongoing_hero': ongoing_hero,
                'categories': categories,
