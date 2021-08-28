@@ -97,7 +97,18 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
     crossorigin="anonymous"></script>
-    </script>
+
+  {% comment %} <script nonce="{{ CSP_NONCE }}" async type="application/javascript" 
+  src="https://www.googletagmanager.com/gtag/js?id=G-Z3XM6J77SC"></script>
+  <script nonce="{{ CSP_NONCE }}" type="application/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Z3XM6J77SC');
+  </script> {% endcomment %}
+
+
   </head>
   <body class="bg-apps d-flex flex-column h-100">
 

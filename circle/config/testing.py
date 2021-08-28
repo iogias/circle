@@ -14,3 +14,8 @@ DATABASES = {
         'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),  # noqa
     }
 }
+
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')  # noqa : F403
+TINYMCE_JS_URL = STATIC_URL + 'tinymce/tinymce.min.js'
