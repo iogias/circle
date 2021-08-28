@@ -1,10 +1,11 @@
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
 from circle.apps.core.views import (faq, home, kontak_kami, syarat_ketentuan,
-                                    tentang_kami)
+                                    tentang_kami,)
 
 urlpatterns = [
     path('reign/', admin.site.urls),
