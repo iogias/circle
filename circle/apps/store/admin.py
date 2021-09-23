@@ -35,4 +35,3 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ('name', 'product', 'partner', 'item_code', 'buy_price', 'sell_price', 'attribute', 'is_active')
     list_filter = ('partner', 'product', 'attribute', 'is_active')
     list_editable = ('partner', 'item_code', 'buy_price', 'sell_price', 'attribute', 'is_active')
-    prepopulated_fields = {'slug': ('name',)}

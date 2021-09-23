@@ -128,7 +128,8 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/offcanvas.js' %}"></script>
+    
+    {% comment %} <script src="{% static 'js/offcanvas.js' %}"></script> {% endcomment %}
     <script src="{% static 'js/swipe.js' %}"></script>  
     {% block javascript %}{% endblock %}
   </body>

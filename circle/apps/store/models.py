@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 from tinymce.models import HTMLField
 
 from circle.apps.core.models import CoreBaseModel
@@ -47,17 +48,21 @@ class Product(CoreBaseModel):
         return reverse('store:product_detail', args=[self.id, self.slug])
 
 
-class Item(CoreBaseModel):
+class Item(models.Model):
     ITEM_ATTRIBUTE = [
         ('reg', 'Regular'),
         ('new', 'New'),
         ('pop', 'Popular')
     ]
+    name = models.CharField(max_length=200, db_index=True)
     partner = models.ForeignKey(Partner, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='items', on_delete=models.CASCADE)
     item_code = models.CharField(max_length=120, unique=True)
     buy_price = models.FloatField(default=0, blank=False)
     sell_price = models.FloatField(default=0, blank=False)
+    is_active = models.BooleanField(default=True)
+    created = models.DateTimeField(default=timezone.now)
+    updated = models.DateTimeField(auto_now=True, blank=True)
     attribute = models.CharField(max_length=3, choices=ITEM_ATTRIBUTE, default='reg')
 
     class Meta:

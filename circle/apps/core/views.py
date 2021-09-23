@@ -7,8 +7,6 @@ from circle.apps.news.views import (async_get_latest_news,
 from circle.apps.promo.models import Promo
 from circle.apps.store.models import Category, Product
 
-# from circle.apps.store.tasks import save_data_product
-
 
 def home(request):
     categories = Category.objects.filter(is_active=True)

@@ -1,11 +1,11 @@
-
+import debug_toolbar
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
 from circle.apps.core.views import (faq, home, kontak_kami, syarat_ketentuan,
-                                    tentang_kami,)
+                                    tentang_kami)
 
 urlpatterns = [
     path('reign/', admin.site.urls),
@@ -19,8 +19,10 @@ urlpatterns = [
     path('promo/', include('circle.apps.promo.urls', namespace='promo')),
     path('cart/', include('circle.apps.cart.urls', namespace='cart')),
     path('account/', include('circle.apps.account.urls', namespace='account')),
-    path('api/v1/', include('circle.apps.api.urls', namespace='api')),
+    path(settings.API_V1_PREFIX, include('circle.apps.api.urls', namespace='api')),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

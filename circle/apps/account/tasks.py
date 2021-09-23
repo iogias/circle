@@ -4,12 +4,15 @@ import os
 
 import httpx
 from celery import shared_task
+from celery.utils.log import get_task_logger
 from django.contrib.auth.models import Group, User
 from django.shortcuts import get_object_or_404
 
-from circle.apps.account.models import Profile
+from circle.apps.account.models import UserProfile
 
 URL_MEMBER = 'https://reporting-api.yodu.id/v1/api/report/'
+
+logger = get_task_logger(__name__)
 
 
 def fetch_member_yodu(arg):
@@ -30,9 +33,10 @@ def fetch_member_yodu(arg):
             return {"msg": "Fetch Member from YODU failed"}
 
 
-@shared_task
+@shared_task(name='save_data_member')
 def save_data_member(arg):
     data = fetch_member_yodu(arg)
+
     # data[:] = [x for x in data if '-' not in x['wallet_id']]
     for y in data[:]:
         if 'Test' in y['name']:
@@ -57,6 +61,10 @@ def save_data_member(arg):
             obj = User(**values)
             obj.save()
             obj.groups.add(group.id)
-            Profile.objects.create(user=obj, name=row['name'], premium=is_premium)
+            UserProfile.objects.create(user=obj,
+                                       name=row['name'],
+                                       premium=is_premium
+                                       )
+        logger.info(obj.username)
 
     # return obj

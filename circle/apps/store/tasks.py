@@ -4,6 +4,7 @@ import os
 
 import httpx
 from celery import shared_task
+from celery.utils.log import get_task_logger
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.utils.text import slugify
 
@@ -12,7 +13,10 @@ from circle.apps.store.models import Item, Partner, Product
 # YODU GET PRODUCT #
 URL_PRODUCT = 'https://middleware-api.yodu.id/'
 
+logger = get_task_logger(__name__)
 
+
+# @shared_task(name='fetch_data_product')
 def fetch_product_yodu(arg):
     category = arg.upper()
     headers = {'Content-type': 'application/json'}
@@ -45,7 +49,6 @@ def save_data_product(arg):
         if row['status'] == 'ACTIVE':
             try:
                 obj = Product.objects.get(product_code=row['product_id'])
-
             except Product.DoesNotExist:
                 obj = Product(
                     name=row['name'],
@@ -55,7 +58,8 @@ def save_data_product(arg):
                     product_code=row['product_id']
                 )
                 obj.save()
-    return data
+            logger.info(obj)
+            # return obj
 
 
 def fetch_items_yodu(arg):
@@ -81,7 +85,7 @@ def fetch_items_yodu(arg):
             return {"msg": "Not found"}
 
 
-@shared_task
+@shared_task(name='save_data_items')
 def save_data_items():
     products = get_list_or_404(Product, is_active=True)
     products_list = [(pd.id, pd.product_code) for pd in products]
@@ -91,18 +95,33 @@ def save_data_items():
             product_obj = get_object_or_404(Product, product_code=r['category'])
             partner_obj = get_object_or_404(Partner, code=r['supplier'].lower())
 
-            try:
-                obj = Item.objects.get(item_code=r['product_id'].strip(), product_id=p[0])
-                break
-            except Item.DoesNotExist:
-                obj = Item(
-                    name=r['name'],
-                    slug=slugify(r['name']),
-                    item_code=r['product_id'].strip(),
-                    buy_price=r['buy_price'],
-                    sell_price=r['sale_price'],
-                    product_id=product_obj.id,
-                    partner_id=partner_obj.id
-                )
-                obj.save()
-    return products_list
+            defaults_value = dict(
+                buy_price=r['buy_price'],
+                sell_price=r['sale_price'],
+                product_id=product_obj.id,
+                partner_id=partner_obj.id
+            )
+            obj, created = Item.objects.update_or_create(
+                name=r['name'],
+                item_code=r['product_id'].strip(),
+                product_id=p[0],
+                defaults=defaults_value,
+            )
+
+            logger.info(obj.name)
+
+    #         try:
+    #             obj = Item.objects.get(item_code=r['product_id'].strip(), product_id=p[0])
+    #             break
+    #         except Item.DoesNotExist:
+    #             obj = Item(
+    #                 name=r['name'],
+    #                 slug=slugify(r['name']),
+    #                 item_code=r['product_id'].strip(),
+    #                 buy_price=r['buy_price'],
+    #                 sell_price=r['sale_price'],
+    #                 product_id=product_obj.id,
+    #                 partner_id=partner_obj.id
+    #             )
+    #             obj.save()
+    # return products_list

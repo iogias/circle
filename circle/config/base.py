@@ -7,6 +7,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+INTERNAL_IPS = ['127.0.0.1']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,10 +31,12 @@ INSTALLED_APPS = [
     'circle.apps.account',
     'circle.apps.news',
     'circle.apps.api',
-    'django_celery_beat'
+    'django_celery_beat',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -82,15 +86,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# DJANGO REST FRAMEWORK
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-}
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Jakarta'
@@ -123,8 +118,63 @@ TINYMCE_DEFAULT_CONFIG = {
 
 
 # AUTH_USER_MODEL = 'account.AccountUser'
-LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_REDIRECT_URL = '/account/dashboard/'
 LOGIN_URL = '/account/login/'
+
+# ========= API Config ============ #
+API_V1_PREFIX = 'api/v1/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ]
+}
+
+# CONTENT SECURITY POLICY
+
+CSP_DEFAULT_SRC = ["'self'"]
+CSP_SCRIPT_SRC = [
+    "'self'",
+    "'unsafe-inline'",
+    "https://stackpath.bootstrapcdn.com",
+    "https://cdn.jsdelivr.net",
+    "https://code.jquery.com",
+    "https://unpkg.com",
+]
+CSP_STYLE_SRC = ["'self'",
+                 "'unsafe-inline'",
+                 "https://cdn.jsdelivr.net",
+                 "https://fonts.googleapis.com",
+                 "https://unpkg.com",
+                 "https://stackpath.bootstrapcdn.com"]
+CSP_FONT_SRC = ["'self'", "https://fonts.gstatic.com", "data:"]
+CSP_IMG_SRC = ["'self'",
+               "http://www.w3.org",
+               "https://*.yodu.id",
+               "https://yodu.id", "https://wp.com", "https://*.wp.com",
+               "www.google-analytics.com", "data:"]
+CSP_INCLUDE_NONCE_IN = ['script-src']
+CSP_CONNECT_SRC = ("'self'",
+                   "www.google-analytics.com")
+CSP_OBJECT_SRC = ["'self'"]
+CSP_BASE_URI = ["'self'"]
+CSP_FRAME_ANCESTORS = ["'self'"]
+CSP_FORM_ACTION = ["'self'"]
+CSP_MANIFEST_SRC = ["'self'"]
+CSP_WORKER_SRC = ["'self'"]
 
 # ========= Third Party Config =========== #
 

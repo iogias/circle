@@ -14,14 +14,14 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   {% endif %}
-  <div class="form-floating">
+  {% comment %} <div class="form-floating">
   {{ form.username }}
   <label for="login-wallet">Wallet Id</label>
   </div>
   <div class="form-floating">
   {{ form.password }}
   <label for="login-pwd">Password</label>
-  </div>
+  </div> {% endcomment %}
   <div class="mt-4">
     <input type="hidden" name="next" value="{{ next }}">
     {% comment %} <button class="w-100 btn btn-warning btn-lg yd-btn" type="submit" value="Log-in">Login</button> {% endcomment %}

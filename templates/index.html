@@ -41,7 +41,6 @@
     {% if p.category_id == cat.id %}
     <div class="swiper-slide">
       <a href="{{p.get_absolute_url}}">
-          <div class="col">
           <img
             height="80"
             width="80"
@@ -49,8 +48,8 @@
             src="{% if p.logo_image %} {{p.logo_image.url}} {% else %} {% static 'img/product_placeholder.jpg' %} {% endif %}"
             alt="{{p.name}}"
           />
-          </div>
       </a>
+       <p class="product-name d-flex justify-content-center">{{ p.name }}</p>
     </div>
     {% endif %}
     {% empty %}
